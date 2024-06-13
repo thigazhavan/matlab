@@ -1,0 +1,120 @@
+package bankk;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import java.awt.Font;
+
+public class dashboard extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					dashboard frame = new dashboard();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public dashboard() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 490, 381);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(0, 255, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JButton btnNewButton = new JButton("PERSONAL ADDRESS BOOK");
+		btnNewButton.setBackground(new Color(0, 255, 255));
+		btnNewButton.setFont(new Font("Sitka Subheading", Font.BOLD, 15));
+		btnNewButton.setForeground(new Color(255, 0, 0));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Thigal frame = new Thigal();
+				frame.setVisible(true);
+			}
+		});
+		btnNewButton.setBounds(103, 21, 268, 40);
+		contentPane.add(btnNewButton);
+		
+		JButton btnProfessionalAddressBook = new JButton("PROFESSIONAL ADDRESS BOOK");
+		btnProfessionalAddressBook.setBackground(new Color(0, 255, 255));
+		btnProfessionalAddressBook.setFont(new Font("Sitka Subheading", Font.BOLD, 15));
+		btnProfessionalAddressBook.setForeground(new Color(255, 0, 0));
+		btnProfessionalAddressBook.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				professional frame = new professional();
+				frame.setVisible(true);
+			}
+		});
+		btnProfessionalAddressBook.setBounds(103, 72, 268, 40);
+		contentPane.add(btnProfessionalAddressBook);
+		
+		JButton btnKidsAddressBook = new JButton("KIDS ADDRESS BOOK");
+		btnKidsAddressBook.setBackground(new Color(0, 255, 255));
+		btnKidsAddressBook.setFont(new Font("Sitka Subheading", Font.BOLD, 15));
+		btnKidsAddressBook.setForeground(new Color(255, 0, 0));
+		btnKidsAddressBook.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				kids frame = new kids();
+				frame.setVisible(true);
+			}
+		});
+		btnKidsAddressBook.setBounds(103, 134, 268, 40);
+		contentPane.add(btnKidsAddressBook);
+		
+		JButton btnLogOut = new JButton("LOG OUT");
+		btnLogOut.setBackground(new Color(0, 255, 255));
+		btnLogOut.setFont(new Font("Trebuchet MS", Font.BOLD, 16));
+		btnLogOut.setForeground(new Color(255, 0, 0));
+		btnLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				hm window = new hm();
+				window.frame.setVisible(true);
+			}
+		});
+		btnLogOut.setBounds(155, 262, 139, 49);
+		contentPane.add(btnLogOut);
+		
+		JButton btnWebsite = new JButton("WEBSITE ADDRESS BOOK");
+		btnWebsite.setBackground(new Color(0, 255, 255));
+		btnWebsite.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				website window = new website();
+				window.setVisible(true);
+			}
+		});
+		btnWebsite.setForeground(Color.RED);
+		btnWebsite.setFont(new Font("Sitka Subheading", Font.BOLD, 15));
+		btnWebsite.setBounds(103, 196, 268, 40);
+		contentPane.add(btnWebsite);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Admin\\Videos\\thigalbb.jfif"));
+		lblNewLabel.setBounds(0, 0, 474, 342);
+		contentPane.add(lblNewLabel);
+	}
+}

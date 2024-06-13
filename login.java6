@@ -1,0 +1,303 @@
+package bankk;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JScrollPane;
+import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
+import java.awt.Color;
+
+public class kids extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField kgender;
+	private JTextField kdob;
+	private JTextField kname;
+	private JTextField kid;
+	private JTextField kno;
+	private JTextField kparent;
+	private JTable table;
+	private JTextField kaddress;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					kids frame = new kids();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public kids() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 787, 398);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(0, 255, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel contentPane_1 = new JPanel();
+		contentPane_1.setBounds(0, 0, 771, 370);
+		contentPane_1.setBackground(new Color(0, 255, 255));
+		contentPane_1.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.add(contentPane_1);
+		contentPane_1.setLayout(null);
+		
+		JLabel aid = new JLabel("ID");
+		aid.setBounds(10, 11, 142, 33);
+		aid.setFont(new Font("Sylfaen", Font.BOLD, 15));
+		contentPane_1.add(aid);
+		
+		JLabel TEXT = new JLabel("NAME");
+		TEXT.setBounds(10, 55, 142, 33);
+		TEXT.setFont(new Font("Sylfaen", Font.BOLD, 15));
+		contentPane_1.add(TEXT);
+		
+		JLabel lblGender = new JLabel("GENDER");
+		lblGender.setBounds(10, 98, 142, 33);
+		lblGender.setFont(new Font("Sylfaen", Font.BOLD, 15));
+		contentPane_1.add(lblGender);
+		
+		JLabel lblParentguardian = new JLabel("PARENT/GUARDIAN");
+		lblParentguardian.setBounds(240, 11, 152, 33);
+		lblParentguardian.setFont(new Font("Sylfaen", Font.BOLD, 15));
+		contentPane_1.add(lblParentguardian);
+		
+		kgender = new JTextField();
+		kgender.setBounds(111, 102, 118, 20);
+		kgender.setColumns(10);
+		contentPane_1.add(kgender);
+		
+		kdob = new JTextField();
+		kdob.setBounds(111, 142, 118, 20);
+		kdob.setColumns(10);
+		contentPane_1.add(kdob);
+		
+		kname = new JTextField();
+		kname.setBounds(111, 59, 118, 20);
+		kname.setColumns(10);
+		contentPane_1.add(kname);
+		
+		kid = new JTextField();
+		kid.setBounds(111, 15, 118, 20);
+		kid.setColumns(10);
+		contentPane_1.add(kid);
+		
+		JLabel lblEmergencyNo = new JLabel("EMERGENCY NO");
+		lblEmergencyNo.setBounds(240, 55, 142, 33);
+		lblEmergencyNo.setFont(new Font("Sylfaen", Font.BOLD, 15));
+		contentPane_1.add(lblEmergencyNo);
+		
+		kno = new JTextField();
+		kno.setBounds(401, 59, 118, 20);
+		kno.setColumns(10);
+		contentPane_1.add(kno);
+		
+		JLabel aname_1 = new JLabel("DOB");
+		aname_1.setBounds(10, 142, 142, 33);
+		aname_1.setFont(new Font("Sylfaen", Font.BOLD, 15));
+		contentPane_1.add(aname_1);
+		
+		kparent = new JTextField();
+		kparent.setBounds(401, 15, 118, 20);
+		kparent.setColumns(10);
+		contentPane_1.add(kparent);
+		
+		JButton btnAdd = new JButton("ADD");
+		btnAdd.setBounds(265, 141, 89, 23);
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = (Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/address","root","");
+					
+					String sql="insert into kids values(?,?,?,?,?,?,?)";
+					PreparedStatement pts=con.prepareStatement(sql);
+					pts.setString(1, kid.getText());
+					pts.setString(2, kname.getText());
+					pts.setString(3, kgender.getText());
+					pts.setString(4, kdob.getText());
+					pts.setString(5, kparent.getText());
+					pts.setString(6, kno.getText());
+					pts.setString(7, kaddress.getText());
+					
+
+					
+					kname.requestFocus();
+					
+					
+
+					
+					pts.executeUpdate();
+					 JOptionPane.showMessageDialog(null,"it has been registered");
+				}
+					catch(Exception ex) {
+						JOptionPane.showMessageDialog(null,"it not has been registered");
+
+					}
+			}
+		});
+		contentPane_1.add(btnAdd);
+		
+		JButton btnShow = new JButton("SHOW");
+		btnShow.setBounds(380, 141, 89, 23);
+		btnShow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = (Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/address","root","");
+					Statement st=con.createStatement();
+					String sql="select * from kids";
+					
+					PreparedStatement pts=con.prepareStatement(sql);
+					ResultSet rs= pts.executeQuery();
+					    DefaultTableModel dt=(DefaultTableModel)table.getModel();
+					dt.setRowCount(0);
+					while(rs.next()) {
+					
+					Object o[]= {rs.getString("kid"),rs.getString("kname"),rs.getString("kgender"),rs.getString("kdob"),rs.getString("kparent"),rs.getString("kno"),rs.getString("kaddress")};
+					dt.addRow(o);
+					}
+			}
+				catch(Exception ec) {
+					JOptionPane.showMessageDialog(null,"it has not been registered");
+					ec.printStackTrace();
+				}
+			}
+			
+		});
+		contentPane_1.add(btnShow);
+		
+		JButton btnDelete = new JButton("DELETE");
+		btnDelete.setBounds(496, 141, 89, 23);
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String code=kid.getText();
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = (Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/address","root","");
+					String sql="delete from kids WHERE kid='"+code+"'";
+					PreparedStatement pts=con.prepareStatement(sql);
+					
+					pts.execute();
+				}
+				catch(Exception ec) {
+					JOptionPane.showMessageDialog(null,"it has not been registered");
+					
+				}
+			}
+		});
+		contentPane_1.add(btnDelete);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 173, 643, 320);
+		contentPane_1.add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+			},
+			new String[] {
+				 "ID", "NAME", "GENDER", "DOB", "PARENT/GUARDIAN", "EMERGENCY NO", "ADDRESS"
+			}
+		));
+		table.getColumnModel().getColumn(5).setPreferredWidth(108);
+		table.getColumnModel().getColumn(6).setPreferredWidth(91);
+		
+		JLabel lblAddress = new JLabel("ADDRESS");
+		lblAddress.setBounds(240, 98, 142, 33);
+		lblAddress.setFont(new Font("Sylfaen", Font.BOLD, 15));
+		contentPane_1.add(lblAddress);
+		
+		kaddress = new JTextField();
+		kaddress.setBounds(401, 102, 118, 20);
+		kaddress.setColumns(10);
+		contentPane_1.add(kaddress);
+		
+		JButton btnNewButton = new JButton("BACK");
+		btnNewButton.setBounds(555, 14, 89, 23);
+		contentPane_1.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Print");
+		btnNewButton_1.setBounds(540, 58, 89, 23);
+		contentPane_1.add(btnNewButton_1);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Admin\\Videos\\thigalss.jpg"));
+		lblNewLabel.setBounds(0, 0, 771, 359);
+		contentPane_1.add(lblNewLabel);
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					table.print();
+				}
+				catch(Exception ty) {
+					ty.printStackTrace()
+;				}
+			}
+		});
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dashboard frame = new dashboard();
+				frame.setVisible(true);
+				dispose();
+			}
+		});
+		
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\Admin\\Pictures\\Camera Roll\\WhatsApp Image 2024-06-05 at 7.25.57 AM (2).jpeg"));
+		lblNewLabel_1.setBounds(10, 11, 761, 348);
+		contentPane.add(lblNewLabel_1);
+	}
+}

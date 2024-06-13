@@ -1,0 +1,343 @@
+package bankk;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
+import javax.swing.ImageIcon;
+
+public class Thigal extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel adob;
+	private JTextField aid;
+	private JTextField aname;
+	private JTextField adate;
+	
+	private JTextField aemail;
+	private JTextField acell;
+	private JTextField ahome;
+	private JTextField aaddress;
+	private JTextField acity;
+	private JTextField astate;
+	private JTable table;
+	private JTable table_1;
+	private JButton btnNewButton;
+	private JButton btnNewButton_1;
+	private JButton btnNewButton_2;
+	private JTable table_2;
+	private JTable table_3;
+	private JTable table_4;
+	private JTable table_5;
+	private JScrollPane scrollPane;
+	private JButton btnNewButton_3;
+	private JLabel lblNewLabel_1;
+	private JButton btnNewButton_4;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Thigal frame = new Thigal();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Thigal() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 819, 501);
+		adob = new JPanel();
+		adob.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(adob);
+		adob.setLayout(null);
+		
+		btnNewButton_4 = new JButton("Print");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					table.print();
+				}
+				catch(Exception ty) {
+					ty.printStackTrace()
+;				}
+			}
+		});
+		btnNewButton_4.setBounds(604, 197, 89, 23);
+		adob.add(btnNewButton_4);
+		
+		JLabel lblNewLabel = new JLabel("NAME");
+		lblNewLabel.setBounds(24, 64, 67, 14);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+		adob.add(lblNewLabel);
+		
+		JLabel lblCell = new JLabel("CELL");
+		lblCell.setBounds(24, 180, 67, 14);
+		lblCell.setFont(new Font("Tahoma", Font.BOLD, 15));
+		adob.add(lblCell);
+		
+		JLabel lblHome = new JLabel("HOME");
+		lblHome.setBounds(225, 64, 67, 14);
+		lblHome.setFont(new Font("Tahoma", Font.BOLD, 15));
+		adob.add(lblHome);
+		
+		JLabel lblBod = new JLabel("DOB");
+		lblBod.setBounds(24, 106, 67, 14);
+		lblBod.setFont(new Font("Tahoma", Font.BOLD, 15));
+		adob.add(lblBod);
+		
+		JLabel a = new JLabel("ADDRESS");
+		a.setBounds(229, 106, 102, 14);
+		a.setFont(new Font("Tahoma", Font.BOLD, 15));
+		adob.add(a);
+		
+		JLabel lblCity = new JLabel("CITY");
+		lblCity.setBounds(225, 145, 67, 14);
+		lblCity.setFont(new Font("Tahoma", Font.BOLD, 15));
+		adob.add(lblCity);
+		
+		JLabel lblState = new JLabel("STATE");
+		lblState.setBounds(229, 180, 67, 14);
+		lblState.setFont(new Font("Tahoma", Font.BOLD, 15));
+		adob.add(lblState);
+		
+		JLabel lblEmail = new JLabel("E-MAIL");
+		lblEmail.setBounds(24, 145, 67, 14);
+		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 15));
+		adob.add(lblEmail);
+		
+		JLabel lblId = new JLabel("ID");
+		lblId.setBounds(24, 26, 67, 14);
+		lblId.setFont(new Font("Tahoma", Font.BOLD, 15));
+		adob.add(lblId);
+		
+		aid = new JTextField();
+		aid.setBounds(101, 25, 114, 20);
+		adob.add(aid);
+		aid.setColumns(10);
+		
+		aname = new JTextField();
+		aname.setBounds(101, 63, 114, 20);
+		aname.setColumns(10);
+		adob.add(aname);
+		
+		adate = new JTextField();
+		adate.setBounds(101, 105, 118, 20);
+		adate.setColumns(10);
+		adob.add(adate);
+		
+		aemail = new JTextField();
+		aemail.setBounds(101, 144, 114, 20);
+		aemail.setColumns(10);
+		adob.add(aemail);
+		
+		acell = new JTextField();
+		acell.setBounds(101, 179, 118, 20);
+		acell.setColumns(10);
+		adob.add(acell);
+		
+		ahome = new JTextField();
+		ahome.setBounds(307, 63, 118, 20);
+		ahome.setColumns(10);
+		adob.add(ahome);
+		
+		aaddress = new JTextField();
+		aaddress.setBounds(307, 105, 118, 20);
+		aaddress.setColumns(10);
+		adob.add(aaddress);
+		
+		acity = new JTextField();
+		acity.setBounds(307, 144, 118, 20);
+		acity.setColumns(10);
+		adob.add(acity);
+		
+		astate = new JTextField();
+		astate.setBounds(306, 179, 118, 20);
+		astate.setColumns(10);
+		adob.add(astate);
+		
+		table = new JTable();
+		table.setBounds(60, 250, 1, 1);
+		adob.add(table);
+		
+		table_1 = new JTable();
+		table_1.setBounds(101, 250, 1, 1);
+		adob.add(table_1);
+		
+		btnNewButton = new JButton("add");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = (Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/address","root","");
+					
+					String sql="insert into phone values(?,?,?,?,?,?,?,?,?)";
+					PreparedStatement pts=con.prepareStatement(sql);
+					pts.setString(1, aid.getText());
+					pts.setString(2, aname.getText());
+					pts.setString(3, adate.getText());
+					pts.setString(4, aemail.getText());
+					pts.setString(5, acell.getText());
+					pts.setString(6, ahome.getText());
+					pts.setString(7, aaddress.getText());
+					pts.setString(8, acity.getText());
+					pts.setString(9, astate.getText());
+
+					
+					aname.requestFocus();
+					
+					
+
+					
+					pts.executeUpdate();
+					 JOptionPane.showMessageDialog(null,"it has been registered");
+				}
+					catch(Exception ex) {
+						JOptionPane.showMessageDialog(null,"it not has been registered");
+
+					}
+			}
+		});
+		btnNewButton.setBounds(604, 104, 89, 23);
+		adob.add(btnNewButton);
+		
+		btnNewButton_1 = new JButton("show");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = (Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/address","root","");
+					Statement st=con.createStatement();
+					String sql="select * from phone";
+					
+					PreparedStatement pts=con.prepareStatement(sql);
+					ResultSet rs= pts.executeQuery();
+					    DefaultTableModel dt=(DefaultTableModel)table_5.getModel();
+					dt.setRowCount(0);
+					while(rs.next()) {
+					
+					Object o[]= {rs.getString("aid"),rs.getString("aname"),rs.getString("adate"),rs.getString("aemail"),rs.getString("acell"),rs.getString("ahome"),rs.getString("aaddress"),rs.getString("acity"),rs.getString("astate")};
+					dt.addRow(o);
+					}
+			}
+				catch(Exception ec) {
+					JOptionPane.showMessageDialog(null,"it has not been registered");
+					ec.printStackTrace();
+				}
+			}
+		});
+		btnNewButton_1.setBounds(517, 153, 89, 23);
+		adob.add(btnNewButton_1);
+		
+		btnNewButton_2 = new JButton("delete");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String code=aid.getText();
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = (Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/address","root","");
+					String sql="delete from phone WHERE aid='"+code+"'";
+					PreparedStatement pts=con.prepareStatement(sql);
+					
+					pts.execute();
+				}
+				catch(Exception ec) {
+					JOptionPane.showMessageDialog(null,"it has not been registered");
+					
+				}
+			}
+		});
+		btnNewButton_2.setBounds(688, 153, 89, 23);
+		adob.add(btnNewButton_2);
+		
+		table_2 = new JTable();
+		table_2.setBounds(116, 289, 1, 1);
+		adob.add(table_2);
+		
+		table_3 = new JTable();
+		table_3.setBounds(190, 307, 1, 1);
+		adob.add(table_3);
+		
+		table_4 = new JTable();
+		table_4.setBounds(150, 289, 1, 1);
+		adob.add(table_4);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(24, 250, 662, 174);
+		adob.add(scrollPane);
+		
+		table_5 = new JTable();
+		scrollPane.setViewportView(table_5);
+		table_5.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null},
+			},
+			new String[] {
+				"ID", "NAME", "DATE", "EMAIL", "CELL", "HOME", "ADDRESS", "CITY", "STATE"
+			}
+		));
+		
+		btnNewButton_3 = new JButton("BACK");
+		btnNewButton_3.setFont(new Font("Sylfaen", Font.PLAIN, 12));
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dashboard frame = new dashboard();
+				frame.setVisible(true);
+				dispose();
+			}
+		});
+		btnNewButton_3.setBounds(688, 11, 89, 23);
+		adob.add(btnNewButton_3);
+		
+		lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\Admin\\Pictures\\Camera Roll\\WhatsApp Image 2024-06-05 at 7.27.52 AM.jpeg"));
+		lblNewLabel_1.setBounds(0, 0, 828, 571);
+		adob.add(lblNewLabel_1);
+	}
+}

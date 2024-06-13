@@ -1,0 +1,174 @@
+package bankk;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.JPasswordField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.awt.event.ActionEvent;
+
+public class newuser extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField user;
+	private JPasswordField pass;
+	private JButton btnNewButton;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					newuser frame = new newuser();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public newuser() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("USER NAME");
+		lblNewLabel.setFont(new Font("Sitka Small", Font.BOLD, 12));
+		lblNewLabel.setBounds(77, 71, 94, 14);
+		contentPane.add(lblNewLabel);
+		
+		JLabel lblPassword = new JLabel("PASSWORD");
+		lblPassword.setFont(new Font("Sitka Small", Font.BOLD, 12));
+		lblPassword.setBounds(77, 117, 94, 14);
+		contentPane.add(lblPassword);
+		
+		user = new JTextField();
+		user.setBounds(195, 66, 143, 20);
+		contentPane.add(user);
+		user.setColumns(10);
+		
+		pass = new JPasswordField();
+		pass.setBounds(195, 112, 143, 20);
+		contentPane.add(pass);
+		
+		JButton signin = new JButton("confirm");
+		signin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					int c=0;
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = (Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/address","root","");
+
+					Statement st1 = con.createStatement();
+					String sql1 =  "Select * from access1";
+					ResultSet res1 = st1.executeQuery(sql1);
+					System.out.println("1");
+					
+					System.out.println("2");
+					String sql2 = "SELECT COUNT(*) AS count FROM access1";
+					
+				
+					PreparedStatement ps2 = con.prepareStatement(sql2);
+					System.out.println("4");
+					ResultSet res2 = ps2.executeQuery();
+					System.out.println("5");
+					String input = pass.getText();
+					int inputLen = input.length();
+					int uppercount=0;
+					int lowercount=0;
+		        	int digitcount=0;
+					for(int j =0; j < inputLen ; j++)
+					{
+						char ch = input.charAt(j);
+						if (Character.isUpperCase(ch))
+							uppercount++;
+						else if (Character.isLowerCase(ch))
+							lowercount++;
+						else if (Character.isDigit(ch))
+							digitcount++;
+					}
+					System.out.print(uppercount);
+					System.out.print(lowercount);
+					System.out.print(digitcount);
+					while(res2.next())
+					{ c = res2.getInt(1);
+					 System.out.print(c);}
+					c+=1;
+					while(res1.next()) {
+						String use1 = res1.getString("username");
+						if(  uppercount >= 1 && lowercount >= 3 && digitcount >=1) {
+							
+					String sql="insert into access1 (username,password) values(?,?)";
+					
+					PreparedStatement pts=con.prepareStatement(sql);
+
+					
+					pts.setString(1, user.getText());
+					pts.setString(2, pass.getText());
+					
+					
+					
+					
+					
+					 user.setText("");
+					 pass.setText("");
+					
+					
+					pts.executeUpdate();
+
+
+					JOptionPane.showMessageDialog(null,"Acount has been registered");
+						}
+						
+						break;
+						
+					}
+					 
+					
+				
+				}
+				catch(Exception eX) {
+				eX.printStackTrace();	
+				}
+				
+			}
+		});
+		signin.setBounds(156, 203, 89, 23);
+		contentPane.add(signin);
+		
+		btnNewButton = new JButton("BACK");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				hm window = new hm();
+				window.frame.setVisible(true);
+			}
+		});
+		btnNewButton.setBounds(335, 11, 89, 23);
+		contentPane.add(btnNewButton);
+	}
+}

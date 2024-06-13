@@ -1,0 +1,160 @@
+package bankk;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
+import javax.swing.ImageIcon;
+import java.awt.Color;
+
+public class FORGETPASSWORD extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField user;
+	private JPasswordField newpass;
+	private JPasswordField confirmpass;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					FORGETPASSWORD frame = new FORGETPASSWORD();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public FORGETPASSWORD() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(0, 255, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("FORGETPASSWORD");
+		lblNewLabel_1_1.setForeground(new Color(0, 0, 0));
+		lblNewLabel_1_1.setFont(new Font("Sylfaen", Font.BOLD, 15));
+		lblNewLabel_1_1.setBounds(135, 38, 160, 33);
+		contentPane.add(lblNewLabel_1_1);
+		
+		JLabel lblNewLabel_1_1_1 = new JLabel("NAME");
+		lblNewLabel_1_1_1.setFont(new Font("Sylfaen", Font.BOLD, 15));
+		lblNewLabel_1_1_1.setBounds(26, 82, 142, 33);
+		contentPane.add(lblNewLabel_1_1_1);
+		
+		JLabel lblNewLabel_1_1_2 = new JLabel("CHANGEPASSWORD");
+		lblNewLabel_1_1_2.setFont(new Font("Sylfaen", Font.BOLD, 15));
+		lblNewLabel_1_1_2.setBounds(26, 126, 160, 33);
+		contentPane.add(lblNewLabel_1_1_2);
+		
+		JLabel lblNewLabel_1_1_3 = new JLabel("CONFIRMPASSWORD");
+		lblNewLabel_1_1_3.setFont(new Font("Sylfaen", Font.BOLD, 15));
+		lblNewLabel_1_1_3.setBounds(26, 183, 178, 33);
+		contentPane.add(lblNewLabel_1_1_3);
+		
+		user = new JTextField();
+		user.setBounds(231, 82, 142, 20);
+		contentPane.add(user);
+		user.setColumns(10);
+		
+		JButton confirm = new JButton("RESET");
+		confirm.setFont(new Font("Trebuchet MS", Font.BOLD, 11));
+		confirm.setForeground(new Color(255, 0, 0));
+		confirm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+				int i=1;
+				String us1 = user.getText();
+				String np = newpass.getText();	
+				String cp = confirmpass.getText();
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				Connection con1 = (Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/address","root","");
+				Statement st1 = con1.createStatement();
+				String sql1 =  "Select * from access1";
+				ResultSet res1 = st1.executeQuery(sql1);
+				System.out.println(us1);
+				System.out.println(np);
+				System.out.println(cp);
+				while(res1.next()) {
+					String use1 = res1.getString("username");
+					System.out.print("1");
+					if(us1.equals(use1) && np.equals(cp)) {
+						String sql2 = "update access1 set password = '"+np+"' where id ='"+i+"'";
+						PreparedStatement pts = con1.prepareStatement(sql2);
+						System.out.print(np);
+					    
+						System.out.println("2");
+						
+						pts.executeUpdate(sql2);
+						System.out.print("success");
+						JOptionPane.showMessageDialog(confirm, " data updated", "updated", -1);
+						try {
+							hm window = new hm();
+							window.frame.setVisible(true);
+							SwingUtilities.windowForComponent(confirm).dispose();
+						}
+						catch(Exception a)
+						
+						{
+							a.printStackTrace();
+							JOptionPane.showMessageDialog(confirm, this, "Error while establishing connection failed", 0);
+						}
+					}
+					else {
+					     user.setText("");
+					     newpass.setText("");
+					     confirmpass.setText("");
+					}
+					i++;
+				}
+				}
+				catch(Exception os)
+				{
+					System.out.print(os);
+					JOptionPane.showMessageDialog(confirm, this, "Error while establishing connection failed", 0);
+				}
+			
+			}
+			
+		});
+		confirm.setBounds(157, 227, 89, 23);
+		contentPane.add(confirm);
+		
+		newpass = new JPasswordField();
+		newpass.setBounds(231, 132, 142, 20);
+		contentPane.add(newpass);
+		
+		confirmpass = new JPasswordField();
+		confirmpass.setBounds(231, 187, 144, 20);
+		contentPane.add(confirmpass);
+	}
+}
